@@ -1,0 +1,1857 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>小狐科技有限公司 · 年会盛典</title>
+<style>
+  :root{
+    --red-950:#260306;
+    --red-900:#3a050a;
+    --red-800:#52080f;
+    --red-700:#6e0b13;
+    --red-600:#8f1019;
+    --gold:#f0c46a;
+    --gold-bright:#ffe6a8;
+    --gold-deep:#c8943a;
+    --cream:#fff6e4;
+    --muted:rgba(255,242,218,.58);
+    --line:rgba(240,196,106,.22);
+    --card:rgba(45,4,8,.55);
+    --shadow:0 24px 80px rgba(0,0,0,.45);
+    --font-body:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",system-ui,sans-serif;
+    --font-display:"Songti SC","STSong","STKaiti","KaiTi","SimSun",serif;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{height:100%;}
+  body{
+    margin:0;
+    overflow:hidden;
+    color:var(--cream);
+    font-family:var(--font-body);
+    background:
+      radial-gradient(1100px 640px at 50% -12%, #a81622 0%, rgba(168,22,34,0) 62%),
+      radial-gradient(900px 680px at -8% 104%, #8d1019 0%, rgba(141,16,25,0) 58%),
+      radial-gradient(900px 680px at 108% 104%, #7c0c15 0%, rgba(124,12,21,0) 58%),
+      linear-gradient(180deg, #4b060c 0%, #320408 46%, #220205 100%);
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+  }
+  body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    background:
+      repeating-linear-gradient(115deg, rgba(255,220,160,.022) 0 1px, transparent 1px 7px),
+      radial-gradient(1200px 500px at 50% 108%, rgba(255,190,90,.10), transparent 70%);
+    mix-blend-mode:screen;
+  }
+
+  #fx{
+    position:fixed;
+    inset:0;
+    width:100%;
+    height:100%;
+    z-index:60;
+    pointer-events:none;
+  }
+
+  .app{
+    position:relative;
+    z-index:1;
+    height:100%;
+    display:flex;
+    flex-direction:column;
+    gap:clamp(14px,2.2vh,26px);
+    padding:clamp(16px,2.6vh,30px) clamp(20px,3.4vw,56px) clamp(18px,2.4vh,28px);
+  }
+
+  .corner{
+    position:fixed;
+    width:32px;
+    height:32px;
+    border:0 solid rgba(240,196,106,.5);
+    z-index:2;
+    pointer-events:none;
+  }
+  .corner.tl{top:14px;left:14px;border-top-width:2px;border-left-width:2px;border-top-left-radius:6px;}
+  .corner.tr{top:14px;right:14px;border-top-width:2px;border-right-width:2px;border-top-right-radius:6px;}
+  .corner.bl{bottom:14px;left:14px;border-bottom-width:2px;border-left-width:2px;border-bottom-left-radius:6px;}
+  .corner.br{bottom:14px;right:14px;border-bottom-width:2px;border-right-width:2px;border-bottom-right-radius:6px;}
+
+  /* ---------- 顶部 ---------- */
+  .topbar{
+    flex:0 0 auto;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:clamp(16px,2.4vw,36px);
+  }
+  .brand{display:flex;align-items:center;gap:clamp(12px,1.4vw,20px);min-width:0;}
+  .emblem{
+    flex:0 0 auto;
+    width:clamp(46px,4.4vw,64px);
+    height:clamp(46px,4.4vw,64px);
+    border-radius:50%;
+    display:grid;
+    place-items:center;
+    font-family:var(--font-display);
+    font-size:clamp(22px,2.1vw,32px);
+    font-weight:700;
+    color:#4a050b;
+    background:
+      radial-gradient(circle at 32% 26%, #fff3cf 0%, var(--gold-bright) 22%, var(--gold) 58%, #b37c2a 100%);
+    border:1px solid rgba(255,244,214,.75);
+    box-shadow:
+      0 0 0 5px rgba(240,196,106,.10),
+      0 0 42px rgba(255,197,88,.35),
+      inset 0 2px 6px rgba(255,255,255,.65);
+  }
+  .brand-text{min-width:0;}
+  .company{
+    margin:0;
+    font-size:clamp(13px,1.15vw,19px);
+    font-weight:500;
+    letter-spacing:.26em;
+    color:var(--gold-bright);
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  .title-row{display:flex;align-items:baseline;gap:clamp(10px,1.2vw,18px);margin-top:2px;}
+  .event-title{
+    margin:0;
+    font-family:var(--font-display);
+    font-size:clamp(34px,3.9vw,60px);
+    font-weight:700;
+    line-height:1.04;
+    letter-spacing:.06em;
+    white-space:nowrap;
+    background:linear-gradient(180deg, #fff7df 4%, #ffe3a0 34%, #f2c163 66%, #c99237 100%);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    filter:drop-shadow(0 4px 18px rgba(255,180,70,.28));
+  }
+  .event-en{
+    font-size:clamp(8px,.72vw,11px);
+    letter-spacing:.34em;
+    color:rgba(240,196,106,.62);
+    white-space:nowrap;
+    text-transform:uppercase;
+  }
+
+  .right-top{display:flex;align-items:center;gap:clamp(14px,1.8vw,30px);min-width:0;}
+  .stats{display:flex;align-items:stretch;gap:clamp(14px,1.8vw,30px);}
+  .stat{position:relative;text-align:center;padding:0 clamp(4px,.6vw,10px);}
+  .stat + .stat::before{
+    content:"";
+    position:absolute;
+    left:calc(clamp(14px,1.8vw,30px) / -2);
+    top:16%;
+    height:68%;
+    width:1px;
+    background:linear-gradient(180deg, transparent, rgba(240,196,106,.34), transparent);
+  }
+  .stat b{
+    display:block;
+    font-size:clamp(20px,2.1vw,32px);
+    font-weight:700;
+    line-height:1;
+    color:var(--gold-bright);
+    font-variant-numeric:tabular-nums;
+    text-shadow:0 0 22px rgba(255,196,90,.28);
+  }
+  .stat span{
+    display:block;
+    margin-top:6px;
+    font-size:clamp(9px,.68vw,11px);
+    letter-spacing:.16em;
+    color:var(--muted);
+    white-space:nowrap;
+  }
+  .utils{display:flex;align-items:center;gap:8px;}
+  .util{
+    height:34px;
+    padding:0 12px;
+    border-radius:999px;
+    border:1px solid rgba(240,196,106,.26);
+    background:rgba(255,236,196,.05);
+    color:rgba(255,241,214,.82);
+    font-family:inherit;
+    font-size:12px;
+    letter-spacing:.06em;
+    cursor:pointer;
+    transition:.2s ease;
+    white-space:nowrap;
+  }
+  .util:hover{border-color:rgba(240,196,106,.6);background:rgba(240,196,106,.13);color:var(--gold-bright);}
+  .util.off{opacity:.5;}
+
+  /* ---------- 主区域 ---------- */
+  .main{
+    flex:1 1 auto;
+    min-height:0;
+    display:grid;
+    grid-template-columns:minmax(0,1fr) clamp(290px,24vw,380px);
+    gap:clamp(16px,2vw,32px);
+  }
+
+  .stage{
+    position:relative;
+    min-height:0;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding:clamp(18px,2.4vh,30px) clamp(18px,2.4vw,38px);
+    border:1px solid var(--line);
+    border-radius:22px;
+    overflow:hidden;
+    background:
+      radial-gradient(680px 380px at 50% 38%, rgba(255,170,60,.13), transparent 70%),
+      radial-gradient(900px 600px at 50% 120%, rgba(255,190,90,.08), transparent 60%),
+      linear-gradient(180deg, rgba(83,8,16,.62) 0%, rgba(47,3,7,.72) 100%);
+    box-shadow:var(--shadow), inset 0 1px 0 rgba(255,230,170,.14);
+  }
+  .stage::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+    background-image:radial-gradient(rgba(255,220,150,.14) 1px, transparent 1.2px);
+    background-size:26px 26px;
+    opacity:.35;
+    mask-image:radial-gradient(ellipse 82% 70% at 50% 42%, #000 15%, transparent 78%);
+    -webkit-mask-image:radial-gradient(ellipse 82% 70% at 50% 42%, #000 15%, transparent 78%);
+  }
+  .stage::after{
+    content:"";
+    position:absolute;
+    left:8%;
+    right:8%;
+    bottom:0;
+    height:1px;
+    background:linear-gradient(90deg, transparent, rgba(240,196,106,.28), transparent);
+  }
+  .halo{
+    position:absolute;
+    left:50%;
+    top:48%;
+    width:min(760px,80%);
+    aspect-ratio:1;
+    transform:translate(-50%,-50%);
+    border-radius:50%;
+    pointer-events:none;
+    background:radial-gradient(circle, rgba(255,205,105,.20) 0%, rgba(255,190,80,.06) 38%, transparent 68%);
+    opacity:0;
+    transition:opacity .7s ease;
+  }
+  .stage[data-state="revealed"] .halo{opacity:1;animation:haloPulse 3s ease-in-out infinite;}
+  @keyframes haloPulse{
+    0%,100%{transform:translate(-50%,-50%) scale(1);opacity:.85;}
+    50%{transform:translate(-50%,-50%) scale(1.08);opacity:1;}
+  }
+
+  .prize-bar{
+    position:relative;
+    z-index:1;
+    display:inline-flex;
+    align-items:center;
+    gap:12px;
+    padding:9px 20px;
+    border-radius:999px;
+    border:1px solid rgba(240,196,106,.3);
+    background:linear-gradient(180deg, rgba(255,226,168,.13), rgba(255,213,138,.04));
+    box-shadow:inset 0 1px 0 rgba(255,244,214,.16), 0 6px 24px rgba(0,0,0,.18);
+    white-space:nowrap;
+  }
+  .prize-label{font-size:11px;letter-spacing:.2em;color:var(--muted);}
+  .prize-name{
+    font-family:var(--font-display);
+    font-size:clamp(17px,1.5vw,23px);
+    color:var(--gold-bright);
+    letter-spacing:.08em;
+    text-shadow:0 0 20px rgba(255,196,90,.4);
+  }
+  .prize-progress{
+    font-size:12px;
+    color:rgba(255,240,214,.78);
+    padding-left:12px;
+    border-left:1px solid rgba(240,196,106,.24);
+    font-variant-numeric:tabular-nums;
+    letter-spacing:.05em;
+  }
+  .prize-bar.done .prize-name{color:var(--muted);text-shadow:none;}
+
+  .roller{
+    position:relative;
+    z-index:1;
+    flex:1 1 auto;
+    min-height:0;
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:clamp(8px,1.4vh,16px);
+    padding:clamp(8px,1.4vh,18px) 0;
+  }
+  .name{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    min-height:1.14em;
+    font-size:clamp(64px,8.6vw,142px);
+    font-weight:800;
+    line-height:1.06;
+    letter-spacing:.05em;
+    color:var(--cream);
+    text-align:center;
+    text-shadow:0 8px 38px rgba(0,0,0,.38);
+    transition:color .3s ease;
+    max-width:100%;
+    word-break:break-word;
+  }
+  .stage[data-state="rolling"] .name{
+    color:var(--gold-bright);
+    filter:blur(.55px);
+    text-shadow:0 0 42px rgba(255,190,80,.45);
+    animation:rollShake .14s linear infinite;
+  }
+  @keyframes rollShake{
+    0%{transform:translateY(-2px) scale(1.004);}
+    50%{transform:translateY(2px) scale(.997);}
+    100%{transform:translateY(-2px) scale(1.004);}
+  }
+  .stage[data-state="revealed"] .name{
+    background:linear-gradient(180deg, #fff9e7 2%, #ffe3a2 36%, #f5c260 68%, #d3983d 100%);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    filter:drop-shadow(0 6px 28px rgba(255,178,60,.35));
+    animation:winnerPop .62s cubic-bezier(.16,1.2,.3,1) both;
+  }
+  @keyframes winnerPop{
+    0%{opacity:0;transform:scale(.72);}
+    60%{opacity:1;transform:scale(1.045);}
+    100%{opacity:1;transform:scale(1);}
+  }
+  .stage[data-state="done"] .name,
+  .stage[data-state="empty"] .name{
+    font-family:var(--font-display);
+    font-size:clamp(40px,4.6vw,74px);
+    color:rgba(255,241,214,.78);
+    letter-spacing:.1em;
+  }
+  .subline{
+    min-height:1.5em;
+    font-size:clamp(13px,1.15vw,18px);
+    letter-spacing:.2em;
+    color:var(--muted);
+    text-align:center;
+    transition:color .3s ease;
+  }
+  .stage[data-state="revealed"] .subline{
+    color:var(--gold);
+    letter-spacing:.28em;
+    text-shadow:0 0 18px rgba(255,190,80,.3);
+  }
+  .stage[data-state="rolling"] .subline{color:rgba(255,230,180,.72);}
+
+  .controls{
+    position:relative;
+    z-index:1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:clamp(8px,1vw,14px);
+    padding-top:clamp(4px,.8vh,10px);
+  }
+  .btn{
+    font-family:inherit;
+    font-size:clamp(13px,1.02vw,16px);
+    font-weight:600;
+    letter-spacing:.08em;
+    border-radius:12px;
+    border:1px solid transparent;
+    padding:0 clamp(16px,1.7vw,26px);
+    height:clamp(42px,5.2vh,54px);
+    cursor:pointer;
+    transition:transform .18s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease, opacity .2s;
+    white-space:nowrap;
+    user-select:none;
+  }
+  .btn:active{transform:translateY(1px) scale(.99);}
+  .btn:disabled{opacity:.38;cursor:not-allowed;transform:none;}
+  .btn.primary{
+    min-width:clamp(160px,13vw,210px);
+    color:#4b060b;
+    border-color:rgba(255,248,224,.8);
+    background:linear-gradient(180deg, #fff0c6 0%, #ffdf9f 38%, #f0bd58 72%, #d39a36 100%);
+    box-shadow:0 10px 28px rgba(214,142,40,.32), inset 0 1px 0 rgba(255,255,255,.7);
+    font-weight:800;
+    font-size:clamp(14px,1.12vw,18px);
+    letter-spacing:.12em;
+  }
+  .btn.primary:hover:not(:disabled){
+    box-shadow:0 14px 38px rgba(240,176,70,.44), inset 0 1px 0 rgba(255,255,255,.8);
+    transform:translateY(-1px);
+  }
+  .btn.ghost{
+    color:rgba(255,239,210,.84);
+    background:rgba(255,235,195,.045);
+    border-color:rgba(240,196,106,.26);
+  }
+  .btn.ghost:hover:not(:disabled){border-color:rgba(240,196,106,.62);background:rgba(255,235,195,.11);color:var(--gold-bright);}
+  .btn.danger{
+    color:#fff5e8;
+    background:linear-gradient(180deg, #b8202c, #8b0d18);
+    border-color:rgba(255,190,170,.35);
+    box-shadow:0 8px 24px rgba(120,10,20,.35);
+  }
+  .btn.danger:hover{filter:brightness(1.08);}
+  .hint{
+    position:relative;
+    z-index:1;
+    margin-top:clamp(6px,1vh,12px);
+    font-size:11px;
+    letter-spacing:.1em;
+    color:rgba(255,240,213,.38);
+    text-align:center;
+  }
+  .hint kbd{
+    font-family:inherit;
+    font-size:10px;
+    padding:2px 7px;
+    margin:0 2px;
+    border-radius:5px;
+    border:1px solid rgba(240,196,106,.3);
+    background:rgba(255,240,210,.06);
+    color:rgba(255,240,214,.68);
+  }
+
+  /* ---------- 中奖名单 ---------- */
+  .panel{
+    min-height:0;
+    display:flex;
+    flex-direction:column;
+    border:1px solid var(--line);
+    border-radius:22px;
+    overflow:hidden;
+    background:linear-gradient(180deg, rgba(63,6,12,.66), rgba(34,3,6,.76));
+    box-shadow:var(--shadow), inset 0 1px 0 rgba(255,230,170,.12);
+  }
+  .panel-head{
+    flex:0 0 auto;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    padding:clamp(16px,1.8vw,24px) clamp(16px,1.8vw,24px) clamp(12px,1.4vw,18px);
+    border-bottom:1px solid rgba(240,196,106,.14);
+    background:radial-gradient(320px 120px at 30% 0%, rgba(255,190,90,.09), transparent 70%);
+  }
+  .panel-title{
+    margin:0;
+    font-family:var(--font-display);
+    font-size:clamp(20px,1.7vw,27px);
+    letter-spacing:.1em;
+    color:var(--gold-bright);
+  }
+  .panel-sub{margin:6px 0 0;font-size:11px;letter-spacing:.12em;color:var(--muted);}
+  .panel-sub b{color:var(--gold);font-weight:600;}
+  .trophy{
+    width:40px;
+    height:40px;
+    flex:0 0 auto;
+    border-radius:50%;
+    display:grid;
+    place-items:center;
+    font-size:19px;
+    color:var(--gold-bright);
+    border:1px solid rgba(240,196,106,.34);
+    background:radial-gradient(circle at 34% 28%, rgba(255,236,185,.22), rgba(255,196,90,.06));
+    box-shadow:0 0 24px rgba(255,190,80,.16);
+  }
+  .winner-list{
+    flex:1 1 auto;
+    min-height:0;
+    overflow-y:auto;
+    padding:clamp(12px,1.4vw,18px);
+    display:flex;
+    flex-direction:column;
+    gap:9px;
+    scrollbar-width:thin;
+    scrollbar-color:rgba(240,196,106,.34) transparent;
+  }
+  .winner-list::-webkit-scrollbar{width:6px;}
+  .winner-list::-webkit-scrollbar-thumb{background:rgba(240,196,106,.28);border-radius:999px;}
+  .winner-list::-webkit-scrollbar-track{background:transparent;}
+  .win-item{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:11px 13px;
+    border-radius:13px;
+    border:1px solid rgba(240,196,106,.13);
+    background:rgba(255,244,218,.035);
+    animation:itemIn .42s cubic-bezier(.2,.9,.3,1) both;
+  }
+  .win-item.latest{
+    border-color:rgba(240,196,106,.46);
+    background:linear-gradient(100deg, rgba(255,210,125,.14), rgba(255,235,195,.045));
+    box-shadow:0 6px 22px rgba(0,0,0,.18), inset 0 1px 0 rgba(255,244,214,.12);
+  }
+  @keyframes itemIn{
+    from{opacity:0;transform:translateX(14px);}
+    to{opacity:1;transform:none;}
+  }
+  .win-index{
+    flex:0 0 auto;
+    width:27px;
+    height:27px;
+    display:grid;
+    place-items:center;
+    border-radius:8px;
+    font-size:10px;
+    font-weight:700;
+    letter-spacing:.04em;
+    color:rgba(255,232,187,.8);
+    background:rgba(240,196,106,.10);
+    border:1px solid rgba(240,196,106,.2);
+    font-variant-numeric:tabular-nums;
+  }
+  .win-main{min-width:0;flex:1 1 auto;display:flex;flex-direction:column;gap:3px;}
+  .win-name{
+    font-size:clamp(16px,1.3vw,21px);
+    font-weight:700;
+    letter-spacing:.06em;
+    color:var(--cream);
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+  .win-item.latest .win-name{color:var(--gold-bright);}
+  .win-meta{
+    font-size:10.5px;
+    letter-spacing:.08em;
+    color:var(--muted);
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+  .win-meta .prize-dot{color:var(--gold);}
+  .latest-tag{
+    flex:0 0 auto;
+    font-size:9px;
+    letter-spacing:.08em;
+    color:#4a060b;
+    background:linear-gradient(180deg, #ffe6ad, #edbf62);
+    border-radius:999px;
+    padding:3px 8px;
+    font-weight:700;
+  }
+  .empty-winners{
+    margin:auto;
+    padding:32px 16px;
+    text-align:center;
+    color:rgba(255,240,213,.36);
+    font-size:12.5px;
+    line-height:1.9;
+    letter-spacing:.06em;
+  }
+  .empty-winners .seal{
+    width:52px;
+    height:52px;
+    margin:0 auto 14px;
+    display:grid;
+    place-items:center;
+    border-radius:50%;
+    border:1px dashed rgba(240,196,106,.3);
+    font-size:22px;
+    color:rgba(240,196,106,.5);
+  }
+
+  /* ---------- 弹层 ---------- */
+  .modal{
+    position:fixed;
+    inset:0;
+    z-index:100;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    background:rgba(16,1,3,.74);
+    backdrop-filter:blur(6px);
+    -webkit-backdrop-filter:blur(6px);
+  }
+  .modal.open{display:flex;}
+  .modal#confirmModal{z-index:110;}
+  .modal-card{
+    width:min(760px,94vw);
+    max-height:90vh;
+    overflow:auto;
+    border-radius:20px;
+    border:1px solid rgba(240,196,106,.4);
+    background:
+      radial-gradient(600px 260px at 50% -10%, rgba(255,190,90,.12), transparent 70%),
+      linear-gradient(160deg, #4a070d 0%, #340408 58%, #260305 100%);
+    box-shadow:0 40px 120px rgba(0,0,0,.65), inset 0 1px 0 rgba(255,238,196,.16);
+    padding:clamp(20px,2.4vw,32px);
+    animation:modalIn .28s cubic-bezier(.2,.9,.3,1) both;
+    scrollbar-width:thin;
+    scrollbar-color:rgba(240,196,106,.34) transparent;
+  }
+  .modal-card.small{width:min(440px,94vw);}
+  @keyframes modalIn{
+    from{opacity:0;transform:translateY(16px) scale(.985);}
+    to{opacity:1;transform:none;}
+  }
+  .modal-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:20px;}
+  .modal-head h2{
+    margin:0;
+    font-family:var(--font-display);
+    font-size:clamp(22px,2vw,30px);
+    letter-spacing:.08em;
+    color:var(--gold-bright);
+  }
+  .modal-head p{margin:7px 0 0;font-size:12px;color:var(--muted);letter-spacing:.04em;}
+  .icon-close{
+    flex:0 0 auto;
+    width:34px;
+    height:34px;
+    border-radius:50%;
+    border:1px solid rgba(240,196,106,.24);
+    background:rgba(255,240,210,.04);
+    color:rgba(255,240,213,.7);
+    font-size:20px;
+    line-height:1;
+    cursor:pointer;
+    transition:.2s;
+  }
+  .icon-close:hover{background:rgba(255,240,210,.12);color:var(--gold-bright);border-color:rgba(240,196,106,.55);}
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .field{display:block;margin-bottom:16px;}
+  .field > span{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    gap:10px;
+    margin-bottom:8px;
+    font-size:12px;
+    letter-spacing:.12em;
+    color:rgba(255,239,210,.78);
+  }
+  .field em{
+    font-style:normal;
+    font-size:10.5px;
+    letter-spacing:.02em;
+    color:rgba(255,240,213,.4);
+  }
+  .field input,
+  .field textarea{
+    width:100%;
+    border-radius:10px;
+    border:1px solid rgba(240,196,106,.24);
+    background:rgba(20,2,4,.42);
+    color:var(--cream);
+    font-family:inherit;
+    font-size:14px;
+    letter-spacing:.04em;
+    padding:11px 13px;
+    outline:none;
+    transition:.2s;
+  }
+  .field textarea{resize:vertical;min-height:150px;line-height:1.75;}
+  .field input:focus,
+  .field textarea:focus{
+    border-color:rgba(240,196,106,.66);
+    background:rgba(20,2,4,.6);
+    box-shadow:0 0 0 3px rgba(240,196,106,.09);
+  }
+  .field input::placeholder,
+  .field textarea::placeholder{color:rgba(255,240,213,.25);}
+  .prize-editor{
+    margin-top:4px;
+    border:1px solid rgba(240,196,106,.15);
+    border-radius:13px;
+    padding:14px;
+    background:rgba(255,240,210,.028);
+  }
+  .editor-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    margin-bottom:12px;
+    font-size:12px;
+    letter-spacing:.1em;
+    color:rgba(255,239,210,.78);
+  }
+  .mini-btn{
+    height:30px;
+    padding:0 12px;
+    border-radius:8px;
+    border:1px solid rgba(240,196,106,.32);
+    background:rgba(240,196,106,.07);
+    color:var(--gold);
+    font-family:inherit;
+    font-size:11.5px;
+    letter-spacing:.06em;
+    cursor:pointer;
+    transition:.2s;
+  }
+  .mini-btn:hover{background:rgba(240,196,106,.16);border-color:rgba(240,196,106,.6);}
+  .prize-row{display:flex;align-items:center;gap:10px;margin-bottom:9px;}
+  .prize-row .p-name{flex:1 1 auto;min-width:0;}
+  .prize-row .p-count{flex:0 0 100px;}
+  .prize-row .p-unit{flex:0 0 auto;font-size:11px;color:var(--muted);}
+  .prize-row input{
+    width:100%;
+    border-radius:8px;
+    border:1px solid rgba(240,196,106,.2);
+    background:rgba(20,2,4,.4);
+    color:var(--cream);
+    font-family:inherit;
+    font-size:13px;
+    padding:8px 10px;
+    outline:none;
+    transition:.2s;
+  }
+  .prize-row input:focus{border-color:rgba(240,196,106,.6);}
+  .prize-row input[type="number"]{-moz-appearance:textfield;appearance:textfield;text-align:center;}
+  .prize-row input::-webkit-outer-spin-button,
+  .prize-row input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0;}
+  .row-del{
+    flex:0 0 auto;
+    width:30px;
+    height:30px;
+    border-radius:8px;
+    border:1px solid rgba(240,196,106,.16);
+    background:transparent;
+    color:rgba(255,240,213,.5);
+    font-size:16px;
+    line-height:1;
+    cursor:pointer;
+    transition:.2s;
+  }
+  .row-del:hover{color:#ffb4ac;border-color:rgba(255,120,110,.45);background:rgba(255,90,80,.08);}
+  .tips{
+    margin:14px 0 0;
+    font-size:11px;
+    line-height:1.75;
+    color:rgba(255,240,213,.42);
+    letter-spacing:.03em;
+  }
+  .modal-foot{
+    display:flex;
+    align-items:center;
+    justify-content:flex-end;
+    gap:10px;
+    margin-top:22px;
+  }
+  .modal-foot .btn{min-width:104px;}
+  .confirm-text{
+    margin:0;
+    font-size:14px;
+    line-height:1.9;
+    color:rgba(255,242,218,.76);
+    letter-spacing:.03em;
+  }
+  .confirm-text b{color:var(--gold-bright);}
+
+  .toast{
+    position:fixed;
+    left:50%;
+    bottom:clamp(24px,4vh,44px);
+    z-index:200;
+    transform:translate(-50%,18px);
+    max-width:min(520px,88vw);
+    padding:11px 20px;
+    border-radius:999px;
+    border:1px solid rgba(240,196,106,.4);
+    background:rgba(40,3,7,.94);
+    color:var(--gold-bright);
+    font-size:13px;
+    letter-spacing:.05em;
+    box-shadow:0 18px 46px rgba(0,0,0,.5);
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .25s ease, transform .25s ease;
+    text-align:center;
+  }
+  .toast.show{opacity:1;transform:translate(-50%,0);}
+
+  /* ---------- 响应式 ---------- */
+  @media (max-width:1180px){
+    .event-en{display:none;}
+    .util span{display:none;}
+    .util{width:34px;padding:0;justify-content:center;}
+    .main{grid-template-columns:minmax(0,1fr) 280px;}
+  }
+  @media (max-width:900px){
+    body{overflow:auto;}
+    .app{height:auto;min-height:100%;}
+    .main{grid-template-columns:1fr;}
+    .stage{min-height:62vh;}
+    .panel{max-height:340px;}
+    .stats{display:none;}
+    .topbar{align-items:flex-start;}
+    .event-title{white-space:normal;}
+  }
+  @media (max-width:600px){
+    .company{letter-spacing:.1em;}
+    .title-row{flex-direction:column;gap:2px;}
+    .controls{gap:8px;}
+    .btn.primary{min-width:140px;}
+    .btn.ghost{padding:0 13px;}
+    .grid-2{grid-template-columns:1fr;}
+    .winner-list{max-height:300px;}
+  }
+  @media (max-height:720px) and (min-width:901px){
+    .name{font-size:clamp(52px,7.4vw,112px);}
+    .stage{padding-top:14px;padding-bottom:14px;}
+    .hint{margin-top:4px;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;}
+  }
+</style>
+</head>
+<body>
+  <canvas id="fx" aria-hidden="true"></canvas>
+
+  <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">
+        <div class="emblem" aria-hidden="true">狐</div>
+        <div class="brand-text">
+          <p class="company" id="companyEl">小狐科技有限公司</p>
+          <div class="title-row">
+            <h1 class="event-title" id="eventTitleEl">年会盛典</h1>
+            <span class="event-en">Annual Ceremony</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="right-top">
+        <div class="stats" aria-label="活动统计">
+          <div class="stat"><b id="statTotal">20</b><span>参与人数</span></div>
+          <div class="stat"><b id="statPool">20</b><span>待抽人数</span></div>
+          <div class="stat"><b id="statWon">0</b><span>已中奖</span></div>
+        </div>
+        <div class="utils">
+          <button class="util" id="soundBtn" type="button" title="开启 / 关闭音效">🔊<span> 音效</span></button>
+          <button class="util" id="fsBtn" type="button" title="进入 / 退出全屏">⛶<span> 全屏</span></button>
+        </div>
+      </div>
+    </header>
+
+    <main class="main">
+      <section class="stage" id="stage" data-state="idle" aria-label="抽奖舞台">
+        <div class="halo" aria-hidden="true"></div>
+
+        <div class="prize-bar" id="prizeBar">
+          <span class="prize-label">当前奖项</span>
+          <strong class="prize-name" id="prizeName">幸运奖</strong>
+          <span class="prize-progress" id="prizeProgress">0 / 10</span>
+        </div>
+
+        <div class="roller">
+          <div class="name" id="nameEl">准备开始</div>
+          <div class="subline" id="sublineEl">点击下方按钮，或按空格 / 回车</div>
+        </div>
+
+        <div class="controls">
+          <button class="btn primary" id="drawBtn" type="button">
+            <span id="drawLabel">开始抽奖</span>
+          </button>
+          <button class="btn ghost" id="redrawBtn" type="button" disabled>重抽本轮</button>
+          <button class="btn ghost" id="settingsBtn" type="button">名单设置</button>
+          <button class="btn ghost" id="resetBtn" type="button">全部重置</button>
+        </div>
+        <div class="hint">
+          按 <kbd>空格</kbd> / <kbd>回车</kbd> 开始或停止 · 中奖者自动移出奖池
+        </div>
+      </section>
+
+      <aside class="panel" aria-label="中奖名单">
+        <div class="panel-head">
+          <div>
+            <h2 class="panel-title">中奖名单</h2>
+            <p class="panel-sub">共 <b id="panelCount">0</b> 位 · 好运连连</p>
+          </div>
+          <div class="trophy" aria-hidden="true">🏆</div>
+        </div>
+        <div class="winner-list" id="winnerList"></div>
+      </aside>
+    </main>
+  </div>
+
+  <!-- 设置 -->
+  <div class="modal" id="settingsModal" aria-hidden="true">
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+      <div class="modal-head">
+        <div>
+          <h2 id="settingsTitle">活动设置</h2>
+          <p>名单、奖项、公司名称和活动标题都可以在这里调整</p>
+        </div>
+        <button class="icon-close" type="button" data-close="settingsModal" aria-label="关闭">×</button>
+      </div>
+
+      <div class="grid-2">
+        <label class="field">
+          <span>公司名称</span>
+          <input id="setCompany" type="text" maxlength="24" autocomplete="off">
+        </label>
+        <label class="field">
+          <span>活动标题</span>
+          <input id="setTitle" type="text" maxlength="16" autocomplete="off">
+        </label>
+      </div>
+
+      <label class="field">
+        <span>参与人员名单 <em id="nameHint">支持换行 / 逗号 / 顿号分隔，自动去重</em></span>
+        <textarea id="setNames" spellcheck="false" placeholder="每行一个姓名，例如：&#10;张伟&#10;王芳&#10;李娜"></textarea>
+      </label>
+
+      <div class="prize-editor">
+        <div class="editor-head">
+          <span>奖项与人数（按从上到下的顺序抽取）</span>
+          <button class="mini-btn" id="addPrizeBtn" type="button">+ 添加奖项</button>
+        </div>
+        <div id="prizeRows"></div>
+      </div>
+
+      <p class="tips">抽完一个奖项的全部名额后会自动进入下一个奖项；修改名单或奖项会清空当前中奖记录，仅修改公司名称 / 标题不会影响进度。</p>
+
+      <div class="modal-foot">
+        <button class="btn ghost" type="button" data-close="settingsModal">取消</button>
+        <button class="btn primary" id="saveSettingsBtn" type="button">保存并应用</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 二次确认 -->
+  <div class="modal" id="confirmModal" aria-hidden="true">
+    <div class="modal-card small" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
+      <div class="modal-head">
+        <div>
+          <h2 id="confirmTitle">确认操作</h2>
+          <p>此操作需要确认</p>
+        </div>
+      </div>
+      <p class="confirm-text" id="confirmText"></p>
+      <div class="modal-foot">
+        <button class="btn ghost" id="confirmCancelBtn" type="button">取消</button>
+        <button class="btn danger" id="confirmOkBtn" type="button">确认重置</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ================= 默认数据 ================= */
+  const STORAGE_KEY = 'hifox-annual-lottery-v1';
+
+  const SAMPLE_NAMES = [
+    '张伟', '王芳', '李娜', '刘洋', '陈静',
+    '杨帆', '赵敏', '黄磊', '周杰', '吴倩',
+    '徐磊', '孙悦', '马超', '朱婷', '胡歌',
+    '郭静', '何伟', '林峰', '罗琳', '高翔'
+  ];
+
+  const DEFAULT_PRIZES = [
+    { id: 'p-lucky', name: '幸运奖', count: 10 },
+    { id: 'p-third', name: '三等奖', count: 5 },
+    { id: 'p-second', name: '二等奖', count: 3 },
+    { id: 'p-first', name: '一等奖', count: 1 },
+    { id: 'p-grand', name: '特等奖', count: 1 }
+  ];
+
+  const state = {
+    company: '小狐科技有限公司',
+    eventTitle: '年会盛典',
+    participants: SAMPLE_NAMES.slice(),
+    prizes: DEFAULT_PRIZES.map(function (p) { return { id: p.id, name: p.name, count: p.count }; }),
+    winners: [],
+    soundOn: true,
+    rolling: false,
+    revealed: false,
+    lastWinner: null
+  };
+
+  /* ================= DOM ================= */
+  const $ = function (id) { return document.getElementById(id); };
+  const stageEl = $('stage');
+  const nameEl = $('nameEl');
+  const sublineEl = $('sublineEl');
+  const companyEl = $('companyEl');
+  const eventTitleEl = $('eventTitleEl');
+  const prizeBarEl = $('prizeBar');
+  const prizeNameEl = $('prizeName');
+  const prizeProgressEl = $('prizeProgress');
+  const statTotalEl = $('statTotal');
+  const statPoolEl = $('statPool');
+  const statWonEl = $('statWon');
+  const panelCountEl = $('panelCount');
+  const winnerListEl = $('winnerList');
+  const drawBtn = $('drawBtn');
+  const drawLabel = $('drawLabel');
+  const redrawBtn = $('redrawBtn');
+  const settingsBtn = $('settingsBtn');
+  const resetBtn = $('resetBtn');
+  const soundBtn = $('soundBtn');
+  const fsBtn = $('fsBtn');
+  const toastEl = $('toast');
+
+  const settingsModal = $('settingsModal');
+  const confirmModal = $('confirmModal');
+  const setCompany = $('setCompany');
+  const setTitle = $('setTitle');
+  const setNames = $('setNames');
+  const nameHint = $('nameHint');
+  const prizeRowsEl = $('prizeRows');
+  const addPrizeBtn = $('addPrizeBtn');
+  const saveSettingsBtn = $('saveSettingsBtn');
+  const confirmTitle = $('confirmTitle');
+  const confirmText = $('confirmText');
+  const confirmOkBtn = $('confirmOkBtn');
+  const confirmCancelBtn = $('confirmCancelBtn');
+
+  let rollTimer = null;
+  let toastTimer = null;
+  let confirmAction = null;
+  let audioCtx = null;
+
+  /* ================= 工具 ================= */
+  function uid() {
+    try {
+      if (window.crypto && window.crypto.randomUUID) return window.crypto.randomUUID();
+    } catch (e) { /* ignore */ }
+    return 'w-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 8);
+  }
+
+  function randomIndex(n) {
+    if (n <= 0) return 0;
+    try {
+      if (window.crypto && window.crypto.getRandomValues) {
+        const arr = new Uint32Array(1);
+        const limit = Math.floor(0x100000000 / n) * n;
+        let x;
+        do { window.crypto.getRandomValues(arr); x = arr[0]; } while (x >= limit);
+        return x % n;
+      }
+    } catch (e) { /* ignore */ }
+    return Math.floor(Math.random() * n);
+  }
+
+  function parseNames(text) {
+    return String(text || '')
+      .split(/[\n\r,，、;；\t]+/)
+      .map(function (s) { return s.trim(); })
+      .filter(Boolean);
+  }
+
+  function normalizeNames(text) {
+    const all = parseNames(text);
+    const seen = Object.create(null);
+    const out = [];
+    all.forEach(function (n) {
+      if (!seen[n]) { seen[n] = true; out.push(n); }
+    });
+    return { all: all, names: out };
+  }
+
+  function winnerOfPrize(prizeId) {
+    return state.winners.filter(function (w) { return w.prizeId === prizeId; }).length;
+  }
+
+  function getPool() {
+    const won = Object.create(null);
+    state.winners.forEach(function (w) { won[w.name] = true; });
+    return state.participants.filter(function (n) { return !won[n]; });
+  }
+
+  function currentPrize() {
+    for (let i = 0; i < state.prizes.length; i++) {
+      const p = state.prizes[i];
+      if (winnerOfPrize(p.id) < p.count) {
+        return { id: p.id, name: p.name, count: p.count, won: winnerOfPrize(p.id) };
+      }
+    }
+    return null;
+  }
+
+  function allPrizesDone() {
+    return state.prizes.length > 0 && state.prizes.every(function (p) {
+      return winnerOfPrize(p.id) >= p.count;
+    });
+  }
+
+  function formatTime(ts) {
+    try {
+      return new Date(ts).toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' });
+    } catch (e) { return ''; }
+  }
+
+  function toast(message) {
+    toastEl.textContent = message;
+    toastEl.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { toastEl.classList.remove('show'); }, 2600);
+  }
+
+  /* ================= 持久化 ================= */
+  function persist() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({
+        v: 1,
+        company: state.company,
+        eventTitle: state.eventTitle,
+        participants: state.participants,
+        prizes: state.prizes,
+        winners: state.winners,
+        soundOn: state.soundOn
+      }));
+    } catch (e) { /* 本地文件或隐私模式可能禁止存储，忽略即可 */ }
+  }
+
+  function restore() {
+    let data;
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return false;
+      data = JSON.parse(raw);
+    } catch (e) { return false; }
+
+    if (!data || !Array.isArray(data.participants) || !Array.isArray(data.prizes) || !Array.isArray(data.winners)) {
+      return false;
+    }
+
+    const names = normalizeNames(data.participants.join('\n')).names;
+    const prizes = data.prizes
+      .filter(function (p) { return p && typeof p.name === 'string' && p.name.trim(); })
+      .map(function (p, i) {
+        return {
+          id: typeof p.id === 'string' && p.id ? p.id : 'p-' + i + '-' + Math.random().toString(36).slice(2, 6),
+          name: p.name.trim(),
+          count: Math.max(1, Math.min(999, parseInt(p.count, 10) || 1))
+        };
+      });
+
+    if (!names.length || !prizes.length) return false;
+
+    const prizeIds = Object.create(null);
+    prizes.forEach(function (p) { prizeIds[p.id] = true; });
+
+    state.company = typeof data.company === 'string' && data.company.trim() ? data.company.trim() : state.company;
+    state.eventTitle = typeof data.eventTitle === 'string' && data.eventTitle.trim() ? data.eventTitle.trim() : state.eventTitle;
+    state.participants = names;
+    state.prizes = prizes;
+    state.winners = data.winners
+      .filter(function (w) {
+        return w && typeof w.name === 'string' && names.indexOf(w.name) !== -1 && prizeIds[w.prizeId];
+      })
+      .map(function (w) {
+        return { id: w.id || uid(), name: w.name, prizeId: w.prizeId, prizeName: w.prizeName || '', at: w.at || Date.now() };
+      });
+    state.soundOn = data.soundOn !== false;
+
+    if (state.winners.length) {
+      state.lastWinner = state.winners[state.winners.length - 1];
+      state.revealed = true;
+    }
+    return true;
+  }
+
+  /* ================= 渲染 ================= */
+  function setNameText(text, adaptive) {
+    nameEl.textContent = text;
+    nameEl.style.fontSize = '';
+    if (!adaptive) return;
+    const len = Array.from(String(text)).length;
+    if (len > 10) nameEl.style.fontSize = 'clamp(26px,3.2vw,52px)';
+    else if (len > 7) nameEl.style.fontSize = 'clamp(32px,4.2vw,70px)';
+    else if (len > 4) nameEl.style.fontSize = 'clamp(44px,6.2vw,102px)';
+  }
+
+  function renderChrome() {
+    companyEl.textContent = state.company;
+    eventTitleEl.textContent = state.eventTitle;
+    document.title = state.company + ' · ' + state.eventTitle;
+
+    const pool = getPool();
+    const prize = currentPrize();
+    const done = allPrizesDone();
+
+    statTotalEl.textContent = state.participants.length;
+    statPoolEl.textContent = pool.length;
+    statWonEl.textContent = state.winners.length;
+    panelCountEl.textContent = state.winners.length;
+
+    if (prize) {
+      prizeBarEl.classList.remove('done');
+      prizeNameEl.textContent = prize.name;
+      prizeProgressEl.textContent = prize.won + ' / ' + prize.count;
+    } else {
+      prizeBarEl.classList.add('done');
+      prizeNameEl.textContent = '全部奖项已抽完';
+      prizeProgressEl.textContent = state.winners.length + ' 位中奖';
+    }
+
+    const canDraw = !!prize && pool.length > 0;
+    if (state.rolling) {
+      drawLabel.textContent = '停止抽奖';
+      drawBtn.disabled = false;
+    } else if (state.revealed && state.lastWinner) {
+      drawLabel.textContent = canDraw ? '继续抽奖' : '本轮结束';
+      drawBtn.disabled = !canDraw;
+    } else {
+      drawLabel.textContent = '开始抽奖';
+      drawBtn.disabled = !canDraw;
+    }
+
+    redrawBtn.disabled = !state.lastWinner || state.rolling || state.winners.length === 0;
+
+    // 舞台文案
+    if (state.rolling) {
+      stageEl.dataset.state = 'rolling';
+      sublineEl.textContent = '正在抽取 · 再次按下空格 / 回车停止';
+    } else if (state.revealed && state.lastWinner) {
+      stageEl.dataset.state = 'revealed';
+      setNameText(state.lastWinner.name, true);
+      sublineEl.textContent = '恭喜获得 · ' + (state.lastWinner.prizeName || '');
+    } else if (done) {
+      stageEl.dataset.state = 'done';
+      setNameText('奖项已全部抽完', false);
+      sublineEl.textContent = '点击「全部重置」开启新一轮';
+    } else if (pool.length === 0) {
+      stageEl.dataset.state = 'empty';
+      setNameText('奖池已空', false);
+      sublineEl.textContent = '请点击「名单设置」导入更多参与人员';
+    } else {
+      stageEl.dataset.state = 'idle';
+      setNameText('准备开始', false);
+      sublineEl.textContent = '点击下方按钮，或按空格 / 回车';
+    }
+  }
+
+  function renderWinners() {
+    winnerListEl.textContent = '';
+
+    if (!state.winners.length) {
+      const empty = document.createElement('div');
+      empty.className = 'empty-winners';
+      empty.innerHTML = '<div class="seal">福</div>还没有中奖记录<br>点击「开始抽奖」，好运马上降临';
+      winnerListEl.appendChild(empty);
+      return;
+    }
+
+    for (let i = state.winners.length - 1; i >= 0; i--) {
+      const w = state.winners[i];
+      const isLatest = i === state.winners.length - 1;
+
+      const item = document.createElement('div');
+      item.className = 'win-item' + (isLatest ? ' latest' : '');
+
+      const idx = document.createElement('span');
+      idx.className = 'win-index';
+      idx.textContent = String(i + 1).padStart(2, '0');
+
+      const main = document.createElement('div');
+      main.className = 'win-main';
+
+      const name = document.createElement('span');
+      name.className = 'win-name';
+      name.textContent = w.name;
+
+      const meta = document.createElement('span');
+      meta.className = 'win-meta';
+      meta.textContent = (w.prizeName || '') + ' · ' + formatTime(w.at);
+
+      main.appendChild(name);
+      main.appendChild(meta);
+      item.appendChild(idx);
+      item.appendChild(main);
+
+      if (isLatest && state.revealed) {
+        const tag = document.createElement('span');
+        tag.className = 'latest-tag';
+        tag.textContent = '本轮';
+        item.appendChild(tag);
+      }
+
+      winnerListEl.appendChild(item);
+    }
+  }
+
+  function render() {
+    renderChrome();
+    renderWinners();
+  }
+
+  /* ================= 音效 ================= */
+  function initAudio() {
+    if (audioCtx) return audioCtx;
+    try {
+      const Ctx = window.AudioContext || window.webkitAudioContext;
+      if (!Ctx) return null;
+      audioCtx = new Ctx();
+    } catch (e) { audioCtx = null; }
+    return audioCtx;
+  }
+
+  function playDing() {
+    if (!state.soundOn) return;
+    const ac = initAudio();
+    if (!ac) return;
+    try {
+      if (ac.state === 'suspended') ac.resume();
+      const t0 = ac.currentTime + 0.01;
+      // 清脆的「叮」+ 柔和和弦
+      const notes = [523.25, 659.25, 783.99, 1046.5];
+      notes.forEach(function (freq, i) {
+        const osc = ac.createOscillator();
+        const gain = ac.createGain();
+        const t = t0 + i * 0.055;
+        osc.type = i === notes.length - 1 ? 'sine' : 'triangle';
+        osc.frequency.setValueAtTime(freq, t);
+        gain.gain.setValueAtTime(0.0001, t);
+        gain.gain.linearRampToValueAtTime(i === notes.length - 1 ? 0.16 : 0.10, t + 0.015);
+        gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.85);
+        osc.connect(gain);
+        gain.connect(ac.destination);
+        osc.start(t);
+        osc.stop(t + 0.9);
+      });
+    } catch (e) { /* ignore */ }
+  }
+
+  function updateSoundBtn() {
+    soundBtn.classList.toggle('off', !state.soundOn);
+    soundBtn.setAttribute('aria-pressed', state.soundOn ? 'true' : 'false');
+    soundBtn.innerHTML = state.soundOn ? '🔊<span> 音效</span>' : '🔇<span> 静音</span>';
+  }
+
+  /* ================= 撒花 ================= */
+  const canvas = $('fx');
+  const ctx = canvas.getContext('2d');
+  const COLORS = ['#ffd97a', '#f6c453', '#ffe9b0', '#e8a33d', '#fff4d6', '#e2534f', '#ff9f68'];
+  let particles = [];
+  let fxRaf = null;
+  let lastFrame = 0;
+  let dpr = 1;
+
+  function resizeCanvas() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = Math.floor(window.innerWidth * dpr);
+    canvas.height = Math.floor(window.innerHeight * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas();
+
+  function spawnBurst(x, y, count, powerX, powerY) {
+    for (let i = 0; i < count; i++) {
+      const angle = -Math.PI / 2 + (Math.random() - 0.5) * Math.PI * 1.25;
+      const speed = powerY * (0.35 + Math.random() * 0.9);
+      const shape = Math.random();
+      particles.push({
+        x: x + (Math.random() - 0.5) * 30,
+        y: y + (Math.random() - 0.5) * 20,
+        vx: Math.cos(angle) * speed * (0.5 + Math.random()) + powerX * (Math.random() - 0.5),
+        vy: Math.sin(angle) * speed - Math.random() * 160,
+        w: 5 + Math.random() * 7,
+        h: 8 + Math.random() * 12,
+        rot: Math.random() * Math.PI * 2,
+        vr: (Math.random() - 0.5) * 9,
+        color: COLORS[Math.floor(Math.random() * COLORS.length)],
+        shape: shape > 0.72 ? 'circle' : (shape > 0.4 ? 'strip' : 'rect'),
+        life: 1,
+        decay: 0.0035 + Math.random() * 0.0025,
+        gravity: 420 + Math.random() * 260,
+        drift: (Math.random() - 0.5) * 50
+      });
+    }
+  }
+
+  function celebrate() {
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    spawnBurst(w * 0.5, h * 0.36, 110, 130, 620);
+    spawnBurst(w * 0.12, h * 0.95, 55, 90, 700);
+    spawnBurst(w * 0.88, h * 0.95, 55, 90, 700);
+    spawnBurst(w * 0.28, h * 0.7, 35, 60, 460);
+    spawnBurst(w * 0.72, h * 0.7, 35, 60, 460);
+    if (!fxRaf) {
+      lastFrame = performance.now();
+      fxRaf = requestAnimationFrame(fxTick);
+    }
+  }
+
+  function fxTick(now) {
+    const dt = Math.min((now - lastFrame) / 1000, 0.05);
+    lastFrame = now;
+
+    ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+
+    for (let i = particles.length - 1; i >= 0; i--) {
+      const p = particles[i];
+      p.vy += p.gravity * dt;
+      p.vx += p.drift * dt;
+      p.vx *= 0.995;
+      p.x += p.vx * dt;
+      p.y += p.vy * dt;
+      p.rot += p.vr * dt;
+      p.life -= p.decay;
+
+      if (p.life <= 0 || p.y > window.innerHeight + 80) {
+        particles.splice(i, 1);
+        continue;
+      }
+
+      ctx.save();
+      ctx.globalAlpha = Math.max(0, Math.min(1, p.life * 1.4));
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rot);
+      ctx.fillStyle = p.color;
+
+      if (p.shape === 'circle') {
+        ctx.beginPath();
+        ctx.arc(0, 0, p.w * 0.45, 0, Math.PI * 2);
+        ctx.fill();
+      } else if (p.shape === 'strip') {
+        ctx.fillRect(-p.w * 0.22, -p.h * 0.7, p.w * 0.44, p.h * 1.4);
+      } else {
+        ctx.fillRect(-p.w / 2, -p.h / 4, p.w, p.h / 2);
+      }
+      ctx.restore();
+    }
+
+    if (particles.length) {
+      fxRaf = requestAnimationFrame(fxTick);
+    } else {
+      ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+      fxRaf = null;
+    }
+  }
+
+  /* ================= 抽奖逻辑 ================= */
+  function startRoll() {
+    if (state.rolling) return;
+    const prize = currentPrize();
+    const pool = getPool();
+
+    if (!prize) {
+      toast('所有奖项已抽完，请点击「全部重置」');
+      return;
+    }
+    if (!pool.length) {
+      toast('奖池已空，请点击「名单设置」导入更多人员');
+      return;
+    }
+
+    // 首次用户手势时初始化音频上下文
+    initAudio();
+    if (audioCtx && audioCtx.state === 'suspended') {
+      try { audioCtx.resume(); } catch (e) { /* ignore */ }
+    }
+
+    state.rolling = true;
+    state.revealed = false;
+    state.lastWinner = null;
+
+    stageEl.dataset.state = 'rolling';
+    setNameText(pool[randomIndex(pool.length)], true);
+    sublineEl.textContent = '正在抽取 · 再次按下空格 / 回车停止';
+    drawLabel.textContent = '停止抽奖';
+    drawBtn.disabled = false;
+    redrawBtn.disabled = true;
+
+    clearInterval(rollTimer);
+    rollTimer = setInterval(function () {
+      const list = getPool();
+      if (!list.length) return;
+      setNameText(list[randomIndex(list.length)], true);
+    }, 46);
+  }
+
+  function stopRoll() {
+    if (!state.rolling) return;
+    state.rolling = false;
+    clearInterval(rollTimer);
+    rollTimer = null;
+
+    const pool = getPool();
+    const prize = currentPrize();
+    if (!prize || !pool.length) {
+      state.revealed = false;
+      render();
+      return;
+    }
+
+    const name = pool[randomIndex(pool.length)];
+    const winner = {
+      id: uid(),
+      name: name,
+      prizeId: prize.id,
+      prizeName: prize.name,
+      at: Date.now()
+    };
+
+    state.winners.push(winner);
+    state.lastWinner = winner;
+    state.revealed = true;
+
+    render();
+    celebrate();
+    playDing();
+    persist();
+
+    toast('恭喜 ' + name + ' 获得' + prize.name + '！');
+  }
+
+  function cancelRoll() {
+    if (!state.rolling) return;
+    state.rolling = false;
+    clearInterval(rollTimer);
+    rollTimer = null;
+    state.lastWinner = null;
+    state.revealed = false;
+    render();
+  }
+
+  function toggleDraw() {
+    if (state.rolling) stopRoll();
+    else startRoll();
+  }
+
+  function redraw() {
+    if (state.rolling || !state.lastWinner) return;
+    const last = state.winners.pop();
+    state.lastWinner = null;
+    state.revealed = false;
+    persist();
+    render();
+    toast('已撤回「' + last.name + '」，重新抽取' + (last.prizeName || ''));
+    startRoll();
+  }
+
+  function resetAll() {
+    state.winners = [];
+    state.lastWinner = null;
+    state.revealed = false;
+    state.rolling = false;
+    clearInterval(rollTimer);
+    rollTimer = null;
+    particles = [];
+    persist();
+    render();
+    toast('已全部重置，奖池已恢复');
+  }
+
+  /* ================= 弹层 ================= */
+  function openModal(el) {
+    el.classList.add('open');
+    el.setAttribute('aria-hidden', 'false');
+  }
+
+  function closeModal(el) {
+    el.classList.remove('open');
+    el.setAttribute('aria-hidden', 'true');
+  }
+
+  function anyModalOpen() {
+    return !!document.querySelector('.modal.open');
+  }
+
+  function showConfirm(options, action) {
+    confirmTitle.textContent = options.title || '确认操作';
+    confirmText.innerHTML = options.text || '';
+    confirmOkBtn.textContent = options.okText || '确认';
+    confirmAction = action;
+    openModal(confirmModal);
+  }
+
+  function hideConfirm() {
+    closeModal(confirmModal);
+    confirmAction = null;
+  }
+
+  /* ----- 设置弹层 ----- */
+  let prizeDraft = [];
+
+  function createPrizeRow(prize) {
+    const row = document.createElement('div');
+    row.className = 'prize-row';
+
+    const nameInput = document.createElement('input');
+    nameInput.className = 'p-name';
+    nameInput.type = 'text';
+    nameInput.maxLength = 12;
+    nameInput.value = prize.name;
+    nameInput.placeholder = '奖项名称';
+    nameInput.setAttribute('aria-label', '奖项名称');
+
+    const countInput = document.createElement('input');
+    countInput.className = 'p-count';
+    countInput.type = 'number';
+    countInput.min = '1';
+    countInput.max = '999';
+    countInput.value = prize.count;
+    countInput.setAttribute('aria-label', '该奖项人数');
+
+    const unit = document.createElement('span');
+    unit.className = 'p-unit';
+    unit.textContent = '人';
+
+    const del = document.createElement('button');
+    del.className = 'row-del';
+    del.type = 'button';
+    del.textContent = '×';
+    del.title = '删除该奖项';
+    del.addEventListener('click', function () {
+      if (prizeRowsEl.children.length <= 1) {
+        toast('至少保留一个奖项');
+        return;
+      }
+      row.remove();
+    });
+
+    row.appendChild(nameInput);
+    row.appendChild(countInput);
+    row.appendChild(unit);
+    row.appendChild(del);
+    return row;
+  }
+
+  function renderPrizeDraft() {
+    prizeRowsEl.textContent = '';
+    prizeDraft.forEach(function (p) {
+      prizeRowsEl.appendChild(createPrizeRow(p));
+    });
+  }
+
+  function updateNameHint() {
+    const result = normalizeNames(setNames.value);
+    const dup = result.all.length - result.names.length;
+    nameHint.textContent = '已识别 ' + result.names.length + ' 人' + (dup > 0 ? '（自动去重 ' + dup + ' 个）' : '') + ' · 换行 / 逗号 / 顿号分隔';
+  }
+
+  function openSettings() {
+    if (state.rolling) cancelRoll();
+    setCompany.value = state.company;
+    setTitle.value = state.eventTitle;
+    setNames.value = state.participants.join('\n');
+    prizeDraft = state.prizes.map(function (p) { return { name: p.name, count: p.count }; });
+    renderPrizeDraft();
+    updateNameHint();
+    openModal(settingsModal);
+    setTimeout(function () { setNames.focus(); }, 60);
+  }
+
+  function collectPrizeDraft() {
+    const rows = Array.prototype.slice.call(prizeRowsEl.children);
+    const prizes = [];
+    const seen = Object.create(null);
+
+    for (let i = 0; i < rows.length; i++) {
+      const nameInput = rows[i].querySelector('.p-name');
+      const countInput = rows[i].querySelector('.p-count');
+      const name = (nameInput.value || '').trim();
+      const count = parseInt(countInput.value, 10);
+
+      if (!name) {
+        nameInput.focus();
+        throw new Error('第 ' + (i + 1) + ' 个奖项还没有名称');
+      }
+      if (seen[name]) {
+        nameInput.focus();
+        throw new Error('奖项名称「' + name + '」重复了');
+      }
+      if (!Number.isFinite(count) || count < 1) {
+        countInput.focus();
+        throw new Error('「' + name + '」的人数至少为 1');
+      }
+      seen[name] = true;
+      prizes.push({ name: name, count: Math.min(999, count) });
+    }
+    return prizes;
+  }
+
+  function applySettings() {
+    let namesResult;
+    let prizes;
+
+    try {
+      namesResult = normalizeNames(setNames.value);
+      if (!namesResult.names.length) throw new Error('请至少导入一位参与人员');
+      prizes = collectPrizeDraft();
+    } catch (err) {
+      toast(err.message);
+      return;
+    }
+
+    const oldNames = state.participants;
+    const oldPrizes = state.prizes.map(function (p) { return { name: p.name, count: p.count }; });
+    const namesChanged = JSON.stringify(oldNames) !== JSON.stringify(namesResult.names);
+    const prizesChanged = JSON.stringify(oldPrizes) !== JSON.stringify(prizes);
+    const needReset = namesChanged || prizesChanged;
+
+    const apply = function () {
+      state.company = (setCompany.value || '').trim() || '小狐科技有限公司';
+      state.eventTitle = (setTitle.value || '').trim() || '年会盛典';
+      state.participants = namesResult.names;
+
+      if (needReset) {
+        state.prizes = prizes.map(function (p, i) {
+          return { id: 'p-' + Date.now().toString(36) + '-' + i, name: p.name, count: p.count };
+        });
+        state.winners = [];
+        state.lastWinner = null;
+        state.revealed = false;
+      } else {
+        // 仅名称/标题变化，保留奖项与中奖记录
+        state.prizes = state.prizes.map(function (p) {
+          const match = prizes.filter(function (x) { return x.name === p.name; })[0];
+          return { id: p.id, name: p.name, count: match ? match.count : p.count };
+        });
+      }
+
+      closeModal(settingsModal);
+      render();
+      persist();
+      if (needReset) {
+        toast('设置已保存：' + state.participants.length + ' 人参与，抽奖已重置');
+      } else {
+        toast('设置已保存');
+      }
+    };
+
+    if (needReset && state.winners.length) {
+      showConfirm({
+        title: '应用新设置？',
+        text: '名单或奖项有改动，保存后会清空当前 <b>' + state.winners.length + '</b> 条中奖记录并重新开始抽奖。',
+        okText: '继续保存'
+      }, apply);
+    } else {
+      apply();
+    }
+  }
+
+  function requestReset() {
+    if (state.rolling) cancelRoll();
+    showConfirm({
+      title: '全部重置',
+      text: '将清空全部中奖记录，并把所有参与人员放回奖池。<br>名单与奖项设置会保留，此操作不可撤销。',
+      okText: '确认重置'
+    }, resetAll);
+  }
+
+  /* ================= 事件绑定 ================= */
+  drawBtn.addEventListener('click', toggleDraw);
+  redrawBtn.addEventListener('click', redraw);
+  settingsBtn.addEventListener('click', openSettings);
+  resetBtn.addEventListener('click', requestReset);
+  saveSettingsBtn.addEventListener('click', applySettings);
+  addPrizeBtn.addEventListener('click', function () {
+    if (prizeRowsEl.children.length >= 12) { toast('最多设置 12 个奖项'); return; }
+    const row = createPrizeRow({ name: '新奖项', count: 1 });
+    prizeRowsEl.appendChild(row);
+    const input = row.querySelector('.p-name');
+    input.focus();
+    input.select();
+  });
+
+  document.querySelectorAll('[data-close]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      closeModal($(btn.getAttribute('data-close')));
+    });
+  });
+
+  // 点击遮罩关闭（设置弹层）
+  [settingsModal, confirmModal].forEach(function (modal) {
+    modal.addEventListener('mousedown', function (e) {
+      if (e.target !== modal) return;
+      if (modal === confirmModal) hideConfirm();
+      else closeModal(modal);
+    });
+  });
+
+  confirmCancelBtn.addEventListener('click', hideConfirm);
+  confirmOkBtn.addEventListener('click', function () {
+    const action = confirmAction;
+    hideConfirm();
+    if (typeof action === 'function') action();
+  });
+
+  setNames.addEventListener('input', updateNameHint);
+
+  soundBtn.addEventListener('click', function () {
+    state.soundOn = !state.soundOn;
+    updateSoundBtn();
+    persist();
+    if (state.soundOn) playDing();
+  });
+
+  fsBtn.addEventListener('click', function () {
+    try {
+      if (!document.fullscreenElement) {
+        const request = document.documentElement.requestFullscreen || document.documentElement.webkitRequestFullscreen;
+        if (!request) { toast('当前浏览器不支持全屏'); return; }
+        const result = request.call(document.documentElement);
+        if (result && result.catch) result.catch(function () { toast('无法进入全屏，请按 F11'); });
+      } else {
+        const exit = document.exitFullscreen || document.webkitExitFullscreen;
+        if (exit) exit.call(document);
+      }
+    } catch (e) { toast('无法进入全屏，请按 F11'); }
+  });
+
+  document.addEventListener('fullscreenchange', function () {
+    const on = !!document.fullscreenElement;
+    fsBtn.innerHTML = on ? '⛶<span> 退出</span>' : '⛶<span> 全屏</span>';
+    fsBtn.title = on ? '退出全屏' : '进入全屏';
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== ' ' && e.code !== 'Space' && e.key !== 'Enter') return;
+    if (anyModalOpen()) return;
+
+    const tag = (e.target && e.target.tagName) ? e.target.tagName.toLowerCase() : '';
+    if (tag === 'input' || tag === 'textarea' || tag === 'select') return;
+    if (e.target && e.target.tagName === 'BUTTON') return; // 按钮自身会处理空格/回车
+
+    e.preventDefault();
+    toggleDraw();
+  }, true);
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape') return;
+    if (confirmModal.classList.contains('open')) hideConfirm();
+    else if (settingsModal.classList.contains('open')) closeModal(settingsModal);
+  });
+
+  // 页面隐藏时停止滚动，避免后台空转
+  document.addEventListener('visibilitychange', function () {
+    if (document.hidden && state.rolling) cancelRoll();
+  });
+
+  /* ================= 启动 ================= */
+  restore();
+  updateSoundBtn();
+  render();
+})();
+</script>
+</body>
+</html>
