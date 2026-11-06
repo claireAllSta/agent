@@ -1,0 +1,26 @@
+PASS 1-static               单文件且无任何外部资源引用 | 11 项静态扫描全部为 0
+PASS 1-file                 交付目录仅一个 HTML 文件 | html 文件数=1
+PASS 1-network              运行时无任何外部网络请求 | 请求 1 条，非 file 请求 0 条
+PASS 2-default              首次打开显示 20 个示例姓名，总人数 20 | total=20 remain=20 chips=20
+PASS 3-import               导入含空行与重复姓名后自动去空行、去重 | roster=['张三', '李四', '王五', '赵六', '孙七', '周八', '吴九', '郑十'] total=8
+PASS 4-mouse                点击开始进入滚动、点击停止定格 1 人 | 滚动采样 6 个不同姓名，停止后 winners=1
+PASS 4-keys                 空格、回车均可完成开始 / 停止 | space True->False，enter True->False，winners=2
+PASS 5-confetti             停止揭晓时撒花（Canvas 像素证据） | alpha 像素=35453
+PASS 5-remove               中奖者移出奖池 | winner=孙悦 remain=19
+PASS 5-norepeat             后续抽奖不再出现已中奖者 | 20 轮中奖 20 人，唯一 20 人，剩余 0
+PASS 6-rounds               中奖名单按「第 N 轮 — 姓名」逐条追加，轮次连续 | 记录 20 条，轮次 1..20
+PASS 7-redraw               重抽本轮：姓名回池、记录替换、可再次抽中 | 回池=True 清记录=True 再抽轮次=1
+PASS 8-reset                全部重置先二次确认；取消不变、确认清空并恢复奖池 | 弹窗=True 取消后 2 条，确认后 0 条 / 奖池 20
+PASS 9-title                公司名 / 年会标题可改且刷新保留 | 默认=('小狐科技有限公司', '年会盛典') 刷新后=('狐厂测试科技有限公司', '新春年会')
+PASS 9-space                标题内输入空格不误触抽奖 | 空格后 rolling=False winners=0
+PASS 11-empty               奖池抽完提示且不空抽 | 池空后点击：rolling=False winners=2 toast='奖池已抽完，请重置'
+PASS 11-after-reset         重置后可继续抽奖 | 重置后再抽 winners=1 pool=1
+PASS 0-js-errors            全程无 JavaScript 报错 | console.error=0 pageerror=0
+PASS 10-layout-1920x1080    1920×1080 无横向滚动、无重叠、主区与名单完整可见 | scrollW=1920/1920 视口内=7/7 无重叠=True 姓名不截断=True
+PASS 10-layout-1920x1080-stress 1920×1080 20 人中奖后名单可滚动且面板完整 | {"count": 20, "scrollable": true, "lastWithinPanel": true, "panelRight": 1873.984375, "innerW": 1920}
+PASS 10-layout-1366x768     1366×768 无横向滚动、无重叠、主区与名单完整可见 | scrollW=1366/1366 视口内=7/7 无重叠=True 姓名不截断=True
+PASS 10-layout-1366x768-stress 1366×768 20 人中奖后名单可滚动且面板完整 | {"count": 20, "scrollable": true, "lastWithinPanel": true, "panelRight": 1330.46875, "innerW": 1366}
+PASS 12-file                交付 HTML 单文件可打开（SHA-256 记录，附件一致性另行核验） | index.html 47149 B sha256=6c212eb5f7f30ec4f616b925d1b778fdc5c312231f90937bd1705fed999b03fd
+------------------------------------------------------------------------
+SUMMARY 23/23 passed in 15.0s
+REPORT /Users/hhhhhh/.hifox/organizations/145d/runs/2026/11/2dff8c07/workdir/agent/tests/artifacts/selftest-report.json
