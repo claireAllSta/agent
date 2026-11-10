@@ -1,9 +1,9 @@
 {
   "version": "2.0.0",
-  "page": "/private/tmp/agent-work/index.html",
-  "sha256": "457ad52ab4a4a4c41ce9850e5e6532c1ae9c115ab2f4896f2769684d3f2dfa39",
-  "size": 47146,
-  "elapsedSeconds": 16.19,
+  "page": "/Users/hhhhhh/guyue/superAgent/work/rose-red-color-200bf8ffcde9/index.html",
+  "sha256": "be7f525e4b2b1542b5c21ed38e46e66cd0e1bb64a0d82cd4ab5b36a42a016ac9",
+  "size": 47169,
+  "elapsedSeconds": 16.39,
   "summary": {
     "total": 23,
     "passed": 23,
@@ -64,7 +64,7 @@
       "criterion": 5,
       "desc": "停止揭晓时撒花（Canvas 像素证据）",
       "status": "PASS",
-      "detail": "alpha 像素=35883"
+      "detail": "alpha 像素=35856"
     },
     {
       "id": "5-remove",
@@ -169,7 +169,7 @@
       "criterion": 12,
       "desc": "交付 HTML 单文件可打开（SHA-256 记录，附件一致性另行核验）",
       "status": "PASS",
-      "detail": "index.html 47146 B sha256=457ad52ab4a4a4c41ce9850e5e6532c1ae9c115ab2f4896f2769684d3f2dfa39"
+      "detail": "index.html 47169 B sha256=be7f525e4b2b1542b5c21ed38e46e66cd0e1bb64a0d82cd4ab5b36a42a016ac9"
     }
   ]
 }
