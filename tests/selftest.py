@@ -3,6 +3,7 @@
 """
 LOT-1 年会抽奖程序（重做版 v2）自测脚本
 覆盖图样 bc8b55da 的 12 条验收标准，使用 Playwright + Chromium 真浏览器。
+另含第 13 条：到下一个凌晨 00:00 的倒计时（目标时刻、每秒递减、跨零点自动重算）。
 
 用法：
     python3 tests/selftest.py
@@ -21,6 +22,7 @@ import sys
 import time
 import hashlib
 import pathlib
+import datetime
 
 from playwright.sync_api import sync_playwright
 
@@ -159,7 +161,7 @@ def main():
         page.on("pageerror", lambda e: page_errors.append(str(e)))
 
         page.goto(url)
-        page.wait_for_function("window.__lottery && window.__lottery.version === '2.0.0'")
+        page.wait_for_function("window.__lottery && window.__lottery.version === '2.1.0'")
         page.wait_for_timeout(200)
 
         try:
@@ -336,7 +338,7 @@ def main():
             ctx.clear_cookies()
             page.evaluate("localStorage.removeItem('hifox.lottery.titles.v2')")
             page.reload()
-            page.wait_for_function("window.__lottery && window.__lottery.version === '2.0.0'")
+            page.wait_for_function("window.__lottery && window.__lottery.version === '2.1.0'")
             page.wait_for_timeout(120)
             defaults = (text(page, "#companyName"), text(page, "#galaTitle"))
 
@@ -354,7 +356,7 @@ def main():
             page.keyboard.press("Enter")
             page.wait_for_timeout(120)
             page.reload()
-            page.wait_for_function("window.__lottery && window.__lottery.version === '2.0.0'")
+            page.wait_for_function("window.__lottery && window.__lottery.version === '2.1.0'")
             page.wait_for_timeout(120)
             persisted = (text(page, "#companyName"), text(page, "#galaTitle"))
 
@@ -374,6 +376,33 @@ def main():
                    no_draw, f"空格后 rolling={st['rolling']} winners={len(st['winners'])}")
         except Exception as exc:  # noqa: BLE001
             record("9-title", 9, "公司名 / 年会标题可改且刷新保留", False, f"异常 {exc}")
+
+        # 13. 倒计时（距离下一个凌晨 00:00）
+        def clock_seconds(value):
+            hh, mm, ss = value.split(":")
+            return int(hh) * 3600 + int(mm) * 60 + int(ss)
+
+        try:
+            cd1 = page.evaluate("window.__lottery.getCountdown()")
+            expected_target = page.evaluate(
+                "() => { const d = new Date(); d.setHours(24, 0, 0, 0); return d.getTime(); }")
+            label = text(page, ".countdown-label")
+            shape_ok = bool(re.match(r"^\d{2}:\d{2}:\d{2}$", cd1["text"]))
+            drift = abs(clock_seconds(cd1["text"]) - cd1["remainingMs"] / 1000.0)
+            record("13-countdown", 13, "页面展示到下一个凌晨 00:00 的倒计时",
+                   cd1["target"] == expected_target and label == "距离凌晨 00:00"
+                   and shape_ok and drift <= 1.5
+                   and abs(cd1["remainingMs"] - (expected_target - page.evaluate("Date.now()"))) < 2500,
+                   f"target={cd1['target']} 期望={expected_target} label={label!r} 时钟={cd1['text']} 偏差={drift:.2f}s")
+
+            page.wait_for_timeout(1300)
+            cd2 = page.evaluate("window.__lottery.getCountdown()")
+            delta = cd1["remainingMs"] - cd2["remainingMs"]
+            record("13-tick", 13, "倒计时每秒递减",
+                   900 <= delta <= 2600 and clock_seconds(cd2["text"]) <= clock_seconds(cd1["text"]),
+                   f"1.3s 内剩余时间减少 {delta:.0f}ms：{cd1['text']} -> {cd2['text']}")
+        except Exception as exc:  # noqa: BLE001
+            record("13-countdown", 13, "页面展示到下一个凌晨 00:00 的倒计时", False, f"异常 {exc}")
 
         # 11. 空奖池提示 / 不空抽 / 重置后可继续
         try:
@@ -419,7 +448,7 @@ def main():
                 vctx = browser.new_context(viewport={"width": width, "height": height})
                 vpage = vctx.new_page()
                 vpage.goto(url)
-                vpage.wait_for_function("window.__lottery && window.__lottery.version === '2.0.0'")
+                vpage.wait_for_function("window.__lottery && window.__lottery.version === '2.1.0'")
                 vpage.wait_for_timeout(180)
 
                 metrics = vpage.evaluate("""() => ({
@@ -429,6 +458,7 @@ def main():
                 })""")
                 boxes = {
                     "topbar": rect(vpage, ".topbar"),
+                    "countdown": rect(vpage, "#countdown"),
                     "stage": rect(vpage, "#stage"),
                     "roster": rect(vpage, ".roster-panel"),
                     "winners": rect(vpage, ".winners-panel"),
@@ -443,15 +473,17 @@ def main():
                                     and r["width"] > 0 and r["height"] > 0)
                 no_overlap = (boxes["stage"]["x"] >= boxes["roster"]["right"] - 1
                               and boxes["winners"]["x"] >= boxes["stage"]["right"] - 1)
+                countdown_placed = (boxes["countdown"]["y"] >= boxes["topbar"]["bottom"] - 1
+                                    and boxes["countdown"]["bottom"] <= boxes["stage"]["y"] + 1)
                 display_clip = vpage.eval_on_selector(
                     "#displayName", "el => el.scrollWidth <= el.clientWidth + 2")
                 ok = (metrics["sw"] <= metrics["cw"] + 1 and all(inside.values())
-                      and no_overlap and display_clip)
+                      and no_overlap and countdown_placed and display_clip)
                 vpage.screenshot(path=str(ART / f"screenshot-{width}x{height}.png"))
                 record(tag, 10, f"{width}×{height} 无横向滚动、无重叠、主区与名单完整可见",
                        ok,
                        f"scrollW={metrics['sw']}/{metrics['cw']} 视口内={sum(inside.values())}/{len(inside)} "
-                       f"无重叠={no_overlap} 姓名不截断={display_clip}")
+                       f"无重叠={no_overlap} 倒计时位置={countdown_placed} 姓名不截断={display_clip}")
 
                 # 20 人中奖压力
                 vpage.evaluate("window.__lottery.reset()")
@@ -477,6 +509,38 @@ def main():
             except Exception as exc:  # noqa: BLE001
                 record(tag, 10, f"{width}×{height} 布局检查", False, f"异常 {exc}")
 
+        # ---------- 13. 倒计时跨过凌晨 00:00 后自动开启下一轮 ----------
+        try:
+            roll_ctx = browser.new_context(viewport={"width": 1366, "height": 768})
+            roll_page = roll_ctx.new_page()
+            roll_page.clock.install(time=datetime.datetime(2026, 11, 10, 23, 59, 55, 500000))
+            roll_page.goto(url)
+            roll_page.wait_for_function("window.__lottery && window.__lottery.version === '2.1.0'")
+            roll_page.wait_for_timeout(100)
+            before = roll_page.evaluate("window.__lottery.getCountdown()")
+            before_target = roll_page.evaluate(
+                "() => { const d = new Date(); d.setHours(24, 0, 0, 0); return d.getTime(); }")
+            roll_page.clock.fast_forward(6000)
+            after = roll_page.evaluate("window.__lottery.getCountdown()")
+            after_target = roll_page.evaluate(
+                "() => { const d = new Date(); d.setHours(24, 0, 0, 0); return d.getTime(); }")
+            toast_text = text(roll_page, "#toast")
+            toast_shown = roll_page.eval_on_selector("#toast", "el => el.classList.contains('show')")
+            ok = (before["target"] == before_target
+                  and 1500 <= before["remainingMs"] <= 6000
+                  and re.match(r"^00:00:0[1-6]$", before["text"])
+                  and after["target"] == after_target and after["target"] > before["target"]
+                  and 23 * 3600 * 1000 < after["remainingMs"] <= 24 * 3600 * 1000
+                  and re.match(r"^23:59:\d{2}$", after["text"])
+                  and toast_shown and "凌晨已到" in toast_text)
+            record("13-rollover", 13, "跨过凌晨 00:00 后自动切到下一轮倒计时并提示",
+                   ok,
+                   f"跨零前目标 {before['target']} 显示 {before['text']}；"
+                   f"跨零后目标 {after['target']} 显示 {after['text']} 提示={toast_text!r}")
+            roll_ctx.close()
+        except Exception as exc:  # noqa: BLE001
+            record("13-rollover", 13, "跨过凌晨 00:00 后自动切到下一轮倒计时并提示", False, f"异常 {exc}")
+
         browser.close()
 
     # ---------- 12. 交付文件同一性（附件由外部上传后核验） ----------
@@ -490,7 +554,7 @@ def main():
     failed = total - passed
     elapsed = time.time() - START
     payload = {
-        "version": "2.0.0",
+        "version": "2.1.0",
         "page": str(PAGE),
         "sha256": digest,
         "size": PAGE.stat().st_size,
