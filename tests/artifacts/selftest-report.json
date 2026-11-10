@@ -1,9 +1,9 @@
 {
   "version": "2.0.0",
-  "page": "/Users/hhhhhh/.hifox/organizations/145d/runs/2026/11/2dff8c07/workdir/agent/index.html",
-  "sha256": "6c212eb5f7f30ec4f616b925d1b778fdc5c312231f90937bd1705fed999b03fd",
-  "size": 47149,
-  "elapsedSeconds": 15.03,
+  "page": "/Users/hhhhhh/.dsh/state/superagent/work/sky-blue-theme-70c5291c76fd/repo/index.html",
+  "sha256": "b120a2275a874c5bcccf81436e4bc42030a9cd1ce3bf3947a7db9f18e79816a1",
+  "size": 47143,
+  "elapsedSeconds": 16.22,
   "summary": {
     "total": 23,
     "passed": 23,
@@ -50,7 +50,7 @@
       "criterion": 4,
       "desc": "点击开始进入滚动、点击停止定格 1 人",
       "status": "PASS",
-      "detail": "滚动采样 6 个不同姓名，停止后 winners=1"
+      "detail": "滚动采样 5 个不同姓名，停止后 winners=1"
     },
     {
       "id": "4-keys",
@@ -64,14 +64,14 @@
       "criterion": 5,
       "desc": "停止揭晓时撒花（Canvas 像素证据）",
       "status": "PASS",
-      "detail": "alpha 像素=35453"
+      "detail": "alpha 像素=34810"
     },
     {
       "id": "5-remove",
       "criterion": 5,
       "desc": "中奖者移出奖池",
       "status": "PASS",
-      "detail": "winner=孙悦 remain=19"
+      "detail": "winner=朱琳 remain=19"
     },
     {
       "id": "5-norepeat",
@@ -169,7 +169,7 @@
       "criterion": 12,
       "desc": "交付 HTML 单文件可打开（SHA-256 记录，附件一致性另行核验）",
       "status": "PASS",
-      "detail": "index.html 47149 B sha256=6c212eb5f7f30ec4f616b925d1b778fdc5c312231f90937bd1705fed999b03fd"
+      "detail": "index.html 47143 B sha256=b120a2275a874c5bcccf81436e4bc42030a9cd1ce3bf3947a7db9f18e79816a1"
     }
   ]
 }
