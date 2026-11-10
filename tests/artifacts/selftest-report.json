@@ -1,9 +1,9 @@
 {
   "version": "2.0.0",
-  "page": "/private/tmp/agent-work/index.html",
-  "sha256": "457ad52ab4a4a4c41ce9850e5e6532c1ae9c115ab2f4896f2769684d3f2dfa39",
-  "size": 47146,
-  "elapsedSeconds": 16.19,
+  "page": "/Users/hhhhhh/guyue/superAgent/work/grass-green-color-e8f003c1d6b8/index.html",
+  "sha256": "ae34ef8ddc1db96ed57b20edb731f75d5dfdc2db705bc009d7b1a6471c9782bc",
+  "size": 47189,
+  "elapsedSeconds": 16.32,
   "summary": {
     "total": 23,
     "passed": 23,
@@ -50,7 +50,7 @@
       "criterion": 4,
       "desc": "点击开始进入滚动、点击停止定格 1 人",
       "status": "PASS",
-      "detail": "滚动采样 5 个不同姓名，停止后 winners=1"
+      "detail": "滚动采样 4 个不同姓名，停止后 winners=1"
     },
     {
       "id": "4-keys",
@@ -64,14 +64,14 @@
       "criterion": 5,
       "desc": "停止揭晓时撒花（Canvas 像素证据）",
       "status": "PASS",
-      "detail": "alpha 像素=35883"
+      "detail": "alpha 像素=38838"
     },
     {
       "id": "5-remove",
       "criterion": 5,
       "desc": "中奖者移出奖池",
       "status": "PASS",
-      "detail": "winner=沈悦 remain=19"
+      "detail": "winner=苏婉 remain=19"
     },
     {
       "id": "5-norepeat",
@@ -169,7 +169,7 @@
       "criterion": 12,
       "desc": "交付 HTML 单文件可打开（SHA-256 记录，附件一致性另行核验）",
       "status": "PASS",
-      "detail": "index.html 47146 B sha256=457ad52ab4a4a4c41ce9850e5e6532c1ae9c115ab2f4896f2769684d3f2dfa39"
+      "detail": "index.html 47189 B sha256=ae34ef8ddc1db96ed57b20edb731f75d5dfdc2db705bc009d7b1a6471c9782bc"
     }
   ]
 }
