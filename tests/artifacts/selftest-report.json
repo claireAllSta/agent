@@ -1,12 +1,12 @@
 {
-  "version": "2.0.0",
-  "page": "/Users/hhhhhh/guyue/superAgent/work/rose-red-color-200bf8ffcde9/index.html",
-  "sha256": "be7f525e4b2b1542b5c21ed38e46e66cd0e1bb64a0d82cd4ab5b36a42a016ac9",
-  "size": 47169,
-  "elapsedSeconds": 16.39,
+  "version": "2.1.0",
+  "page": "/Users/hhhhhh/guyue/superAgent/work/lottery-countdown-14d5a91befcd/index.html",
+  "sha256": "1f39e591583290b9b9c39e54faf12d789a78f0190a2f85a1141a672994b3ebcf",
+  "size": 52255,
+  "elapsedSeconds": 17.12,
   "summary": {
-    "total": 23,
-    "passed": 23,
+    "total": 26,
+    "passed": 26,
     "failed": 0
   },
   "results": [
@@ -50,7 +50,7 @@
       "criterion": 4,
       "desc": "点击开始进入滚动、点击停止定格 1 人",
       "status": "PASS",
-      "detail": "滚动采样 5 个不同姓名，停止后 winners=1"
+      "detail": "滚动采样 4 个不同姓名，停止后 winners=1"
     },
     {
       "id": "4-keys",
@@ -64,7 +64,7 @@
       "criterion": 5,
       "desc": "停止揭晓时撒花（Canvas 像素证据）",
       "status": "PASS",
-      "detail": "alpha 像素=35856"
+      "detail": "alpha 像素=41077"
     },
     {
       "id": "5-remove",
@@ -116,6 +116,20 @@
       "detail": "空格后 rolling=False winners=0"
     },
     {
+      "id": "13-countdown",
+      "criterion": 13,
+      "desc": "页面展示到下一个凌晨 00:00 的倒计时",
+      "status": "PASS",
+      "detail": "target=1794326400000 期望=1794326400000 label='距离凌晨 00:00' 时钟=08:19:30 偏差=0.19s"
+    },
+    {
+      "id": "13-tick",
+      "criterion": 13,
+      "desc": "倒计时每秒递减",
+      "status": "PASS",
+      "detail": "1.3s 内剩余时间减少 1308ms：08:19:30 -> 08:19:28"
+    },
+    {
       "id": "11-empty",
       "criterion": 11,
       "desc": "奖池抽完提示且不空抽",
@@ -141,7 +155,7 @@
       "criterion": 10,
       "desc": "1920×1080 无横向滚动、无重叠、主区与名单完整可见",
       "status": "PASS",
-      "detail": "scrollW=1920/1920 视口内=7/7 无重叠=True 姓名不截断=True"
+      "detail": "scrollW=1920/1920 视口内=8/8 无重叠=True 倒计时位置=True 姓名不截断=True"
     },
     {
       "id": "10-layout-1920x1080-stress",
@@ -155,7 +169,7 @@
       "criterion": 10,
       "desc": "1366×768 无横向滚动、无重叠、主区与名单完整可见",
       "status": "PASS",
-      "detail": "scrollW=1366/1366 视口内=7/7 无重叠=True 姓名不截断=True"
+      "detail": "scrollW=1366/1366 视口内=8/8 无重叠=True 倒计时位置=True 姓名不截断=True"
     },
     {
       "id": "10-layout-1366x768-stress",
@@ -165,11 +179,18 @@
       "detail": "{\"count\": 20, \"scrollable\": true, \"lastWithinPanel\": true, \"panelRight\": 1330.46875, \"innerW\": 1366}"
     },
     {
+      "id": "13-rollover",
+      "criterion": 13,
+      "desc": "跨过凌晨 00:00 后自动切到下一轮倒计时并提示",
+      "status": "PASS",
+      "detail": "跨零前目标 1794326400000 显示 00:00:04；跨零后目标 1794412800000 显示 23:59:58 提示='凌晨已到 · 新的一天开始了'"
+    },
+    {
       "id": "12-file",
       "criterion": 12,
       "desc": "交付 HTML 单文件可打开（SHA-256 记录，附件一致性另行核验）",
       "status": "PASS",
-      "detail": "index.html 47169 B sha256=be7f525e4b2b1542b5c21ed38e46e66cd0e1bb64a0d82cd4ab5b36a42a016ac9"
+      "detail": "index.html 52255 B sha256=1f39e591583290b9b9c39e54faf12d789a78f0190a2f85a1141a672994b3ebcf"
     }
   ]
 }

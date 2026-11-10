@@ -101,7 +101,7 @@
     z-index: 1;
     height: 100%;
     display: grid;
-    grid-template-rows: auto minmax(0, 1fr) auto;
+    grid-template-rows: auto auto minmax(0, 1fr) auto;
     overflow: hidden;
   }
 
@@ -246,6 +246,83 @@
   .editable:focus {
     background: rgba(255, 214, 231, .13);
     box-shadow: 0 0 0 1px rgba(255, 214, 231, .5);
+  }
+
+  /* ---------- countdown (distance to the next 00:00) ---------- */
+
+  .countdown {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(9px, 1vw, 16px);
+    width: min(760px, calc(100% - clamp(40px, 5.2vw, 92px)));
+    margin: clamp(6px, .85vh, 11px) auto 0;
+    padding: clamp(4px, .55vh, 8px) clamp(16px, 1.8vw, 26px);
+    border: 1px solid var(--rose-line);
+    border-radius: 999px;
+    background:
+      radial-gradient(120% 180% at 50% 0%, rgba(240, 106, 158, .16), transparent 62%),
+      linear-gradient(90deg, rgba(255, 214, 231, .03), rgba(255, 214, 231, .1) 50%, rgba(255, 214, 231, .03));
+    box-shadow:
+      inset 0 1px 0 rgba(255, 214, 231, .14),
+      0 12px 30px rgba(0, 0, 0, .24);
+  }
+
+  .countdown-label {
+    flex: none;
+    font-size: clamp(11px, .86vw, 15px);
+    letter-spacing: .14em;
+    color: rgba(255, 234, 243, .72);
+    white-space: nowrap;
+  }
+
+  .countdown-label b {
+    font-weight: 600;
+    color: var(--rose-bright);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .countdown-clock {
+    display: flex;
+    align-items: center;
+    gap: clamp(1px, .2vw, 3px);
+    font-family: var(--font-serif);
+    font-size: clamp(22px, 1.9vw, 34px);
+    font-weight: 700;
+    letter-spacing: .07em;
+    line-height: 1.05;
+    font-variant-numeric: tabular-nums;
+    background: linear-gradient(180deg, #fff7fb 0%, #ffd6e7 46%, #f06a9e 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: var(--rose-bright);
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 3px 12px rgba(0, 0, 0, .36));
+  }
+
+  .countdown-clock .cd-colon {
+    color: rgba(255, 214, 231, .58);
+    -webkit-text-fill-color: rgba(255, 214, 231, .58);
+    font-size: .8em;
+  }
+
+  .countdown-spark {
+    flex: none;
+    font-size: clamp(9px, .72vw, 12px);
+    color: rgba(255, 214, 231, .5);
+    line-height: 1;
+  }
+
+  .countdown.is-reached {
+    animation: cdFlash 1.1s ease;
+  }
+
+  @keyframes cdFlash {
+    0% { border-color: var(--rose-line); box-shadow: inset 0 1px 0 rgba(255, 214, 231, .14), 0 12px 30px rgba(0, 0, 0, .24); }
+    30% { border-color: rgba(255, 214, 231, .85); box-shadow: inset 0 1px 0 rgba(255, 214, 231, .45), 0 0 46px rgba(255, 196, 220, .55); }
+    100% { border-color: var(--rose-line); box-shadow: inset 0 1px 0 rgba(255, 214, 231, .14), 0 12px 30px rgba(0, 0, 0, .24); }
   }
 
   /* ---------- buttons ---------- */
@@ -964,6 +1041,15 @@
     </div>
   </header>
 
+  <div id="countdown" class="countdown" role="timer" aria-label="距离凌晨 00:00 的倒计时">
+    <span class="countdown-spark" aria-hidden="true">✦</span>
+    <span class="countdown-label">距离凌晨 <b>00:00</b></span>
+    <span class="countdown-clock" aria-hidden="true">
+      <span id="cdHour">00</span><span class="cd-colon">:</span><span id="cdMin">00</span><span class="cd-colon">:</span><span id="cdSec">00</span>
+    </span>
+    <span class="countdown-spark" aria-hidden="true">✦</span>
+  </div>
+
   <main class="board">
     <aside class="panel roster-panel" aria-label="参与人员名单">
       <div class="panel-head">
@@ -1067,6 +1153,7 @@
   ];
   var TITLE_KEY = 'hifox.lottery.titles.v2';
   var ROLL_INTERVAL = 58;
+  var COUNTDOWN_TICK = 250;
 
   function $(id) { return document.getElementById(id); }
 
@@ -1092,6 +1179,10 @@
     roundInfo: $('roundInfo'),
     roundBadge: $('roundBadge'),
     stageStatus: $('stageStatus'),
+    countdown: $('countdown'),
+    cdHour: $('cdHour'),
+    cdMin: $('cdMin'),
+    cdSec: $('cdSec'),
     footerBrand: $('footerBrand'),
     footerStatus: $('footerStatus'),
     toast: $('toast'),
@@ -1115,6 +1206,8 @@
   var rollTimer = null;
   var toastTimer = null;
   var lastFocus = null;
+  var countdownTarget = 0;
+  var countdownTimer = null;
 
   /* ---------------- helpers ---------------- */
 
@@ -1149,6 +1242,49 @@
 
   function currentRound() {
     return winners.length + 1;
+  }
+
+  /* ---------------- countdown ---------------- */
+
+  function pad2(value) {
+    return (value < 10 ? '0' : '') + value;
+  }
+
+  /* Timestamp of the first 00:00 happening strictly after `fromMs` (local time). */
+  function nextMidnight(fromMs) {
+    var next = new Date(fromMs);
+    next.setHours(24, 0, 0, 0);
+    return next.getTime();
+  }
+
+  function paintCountdown(now) {
+    var remaining = countdownTarget - now;
+    if (remaining <= 0) {
+      var late = -remaining;
+      countdownTarget = nextMidnight(now);
+      remaining = countdownTarget - now;
+      /* Only celebrate if the tick actually observed the crossing, not after a long sleep. */
+      if (late <= 5000) {
+        els.countdown.classList.remove('is-reached');
+        void els.countdown.offsetWidth;
+        els.countdown.classList.add('is-reached');
+        setTimeout(function () { els.countdown.classList.remove('is-reached'); }, 1200);
+        showToast('凌晨已到 · 新的一天开始了');
+      }
+    }
+    var total = Math.floor(Math.max(0, remaining) / 1000);
+    els.cdHour.textContent = pad2(Math.floor(total / 3600));
+    els.cdMin.textContent = pad2(Math.floor(total % 3600 / 60));
+    els.cdSec.textContent = pad2(total % 60);
+    return remaining;
+  }
+
+  function startCountdown() {
+    countdownTarget = nextMidnight(Date.now());
+    paintCountdown(Date.now());
+    countdownTimer = setInterval(function () {
+      paintCountdown(Date.now());
+    }, COUNTDOWN_TICK);
   }
 
   /* ---------------- titles ---------------- */
@@ -1648,18 +1784,23 @@
     if (!rafId) sizeCanvas();
   });
 
+  document.addEventListener('visibilitychange', function () {
+    if (!document.hidden) paintCountdown(Date.now());
+  });
+
   /* ---------------- init ---------------- */
 
   bindEditable(els.company);
   bindEditable(els.gala);
   loadTitles();
   sizeCanvas();
+  startCountdown();
   render();
   setSub('点击「开始抽奖」，或按空格 / 回车开始');
 
   /* Small, side-effect-free test surface for automated verification. */
   window.__lottery = {
-    version: '2.0.0',
+    version: '2.1.0',
     getState: function () {
       return {
         roster: roster.slice(),
@@ -1667,6 +1808,14 @@
         winners: winners.map(function (w) { return { round: w.round, name: w.name }; }),
         rolling: rolling,
         currentRound: currentRound()
+      };
+    },
+    getCountdown: function () {
+      return {
+        target: countdownTarget,
+        remainingMs: countdownTarget - Date.now(),
+        text: els.cdHour.textContent + ':' + els.cdMin.textContent + ':' + els.cdSec.textContent,
+        label: (els.countdown.querySelector('.countdown-label').textContent || '').replace(/\s+/g, ' ').trim()
       };
     },
     parseNames: parseNames,
