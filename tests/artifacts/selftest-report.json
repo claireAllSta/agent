@@ -1,9 +1,9 @@
 {
   "version": "2.0.0",
-  "page": "/Users/hhhhhh/.dsh/state/superagent/work/sky-blue-theme-70c5291c76fd/repo/index.html",
-  "sha256": "b120a2275a874c5bcccf81436e4bc42030a9cd1ce3bf3947a7db9f18e79816a1",
-  "size": 47143,
-  "elapsedSeconds": 16.22,
+  "page": "/private/tmp/agent-work/index.html",
+  "sha256": "457ad52ab4a4a4c41ce9850e5e6532c1ae9c115ab2f4896f2769684d3f2dfa39",
+  "size": 47146,
+  "elapsedSeconds": 16.19,
   "summary": {
     "total": 23,
     "passed": 23,
@@ -64,14 +64,14 @@
       "criterion": 5,
       "desc": "停止揭晓时撒花（Canvas 像素证据）",
       "status": "PASS",
-      "detail": "alpha 像素=34810"
+      "detail": "alpha 像素=35883"
     },
     {
       "id": "5-remove",
       "criterion": 5,
       "desc": "中奖者移出奖池",
       "status": "PASS",
-      "detail": "winner=朱琳 remain=19"
+      "detail": "winner=沈悦 remain=19"
     },
     {
       "id": "5-norepeat",
@@ -169,7 +169,7 @@
       "criterion": 12,
       "desc": "交付 HTML 单文件可打开（SHA-256 记录，附件一致性另行核验）",
       "status": "PASS",
-      "detail": "index.html 47143 B sha256=b120a2275a874c5bcccf81436e4bc42030a9cd1ce3bf3947a7db9f18e79816a1"
+      "detail": "index.html 47146 B sha256=457ad52ab4a4a4c41ce9850e5e6532c1ae9c115ab2f4896f2769684d3f2dfa39"
     }
   ]
 }
